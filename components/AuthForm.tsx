@@ -21,12 +21,14 @@ import { signIn, signUp } from "@/lib/actions/auth.action";
 import FormField from "./FormField";
 
 const authFormSchema = (type: FormType) => {
-  return z.object({
-    name: type === "sign-up" ? z.string().min(3) : z.string().optional(),
-    email: z.string().email(),
-    password: z.string().min(3),
-  });
+    return z.object({
+        name: type === "sign-up" ? z.string().min(3) : z.string().optional(),
+        email: z.string().refine((val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+                "Invalid email address"),
+        password: z.string().min(8),
+    });
 };
+
 
 const AuthForm = ({ type }: { type: FormType }) => {
   const router = useRouter();
@@ -105,7 +107,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
           <h2 className="text-primary-100">PrepWise</h2>
         </div>
 
-        <h3>Practice job interviews with AI</h3>
+        <h3>Practice Mock job interviews with AI</h3>
 
         <Form {...form}>
           <form
