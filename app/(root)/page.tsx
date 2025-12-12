@@ -9,6 +9,7 @@ import {
   getInterviewsByUserId,
   getLatestInterviews,
 } from "@/lib/actions/general.action";
+import {dummyInterviews} from "@/constants";
 
 async function Home() {
   const user = await getCurrentUser();
@@ -48,21 +49,13 @@ async function Home() {
         <h2>Your Interviews</h2>
 
         <div className="interviews-section">
-          {hasPastInterviews ? (
-            userInterviews?.map((interview) => (
-              <InterviewCard
-                key={interview.id}
-                userId={user?.id}
-                interviewId={interview.id}
-                role={interview.role}
-                type={interview.type}
-                techstack={interview.techstack}
-                createdAt={interview.createdAt}
+          {dummyInterviews.map((interview,index) => (
+              <InterviewCard key={index}
+                             role={interview.role}
+                             type={interview.type}
+                             techstack={interview.techstack}
               />
-            ))
-          ) : (
-            <p>You haven&apos;t taken any interviews yet</p>
-          )}
+          ))}
         </div>
       </section>
 
